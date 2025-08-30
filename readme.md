@@ -24,7 +24,7 @@ A simple billing management app with three main screens for handling buyers and 
 1. Clone the repository:
    ```bash
    git clone <repo-url>
-   cd <repo-folder>```
+   cd <repo-folder>
 
 2. Install dependencies:
 ```npm install```
