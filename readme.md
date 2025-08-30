@@ -27,10 +27,8 @@ A simple billing management app with three main screens for handling buyers and 
    cd <repo-folder>
 
 2. Install dependencies:
-'''
-   npm install
-'''
+```
+   npm install```
 
 3. Run the app:
-'''
-    npm start'''
+    ```npm start```
