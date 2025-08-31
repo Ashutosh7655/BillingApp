@@ -3,6 +3,7 @@ import { StyleSheet, Text, View ,TouchableOpacity,Alert, Pressable} from 'react-
 import {theme} from '../theme.js';
 import AntDesign from "@expo/vector-icons/AntDesign";
 import { useRouter } from 'expo-router';
+import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 export function BuyerListItem({name,id}){
     const parseName=name;
     const parseId=id;
@@ -27,11 +28,15 @@ export function BuyerListItem({name,id}){
   }
   
 return (
-      <Pressable onPress={routeTobuyerInfo}>
+      <View >
       <View style={styles.itemContainer}>
       <Text  style={styles.itemText}>{name}</Text>
       {/* <Text  style={styles.itemText}>{contact}</Text> */}
-      
+      <TouchableOpacity style={{marginRight:12}}
+      onPress={routeTobuyerInfo} activeOpacity={0.8}
+      hitSlop={{ left: 10}}>
+        <MaterialCommunityIcons name="account-details" size={24} color="black" />
+      </TouchableOpacity>
       <TouchableOpacity
       onPress={()=>handleDelete()} activeOpacity={0.8}>
         <AntDesign
@@ -42,7 +47,7 @@ return (
       </TouchableOpacity>
       </View>
 
-      </Pressable>);
+      </View>);
 }
 const styles = StyleSheet.create({
   
