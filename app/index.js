@@ -1,6 +1,7 @@
 import { useState } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View,Button } from 'react-native';
 import { Dropdown } from 'react-native-element-dropdown';
+import {BillCreate} from '../components/BillCreate';
 
 const db = [
   { id: 1, name: "John", contact: "55555555" },
@@ -15,6 +16,14 @@ export default function App() {
     label: item.name,
     value: item.id,
   }));
+  const [id, setProductid] = useState("");
+  const [quantity, setQuantity] = useState(0);
+   // store product fields
+  const [products, setProducts] = useState([]); // store product fields
+
+  const handleAddProduct = () => {
+    setProducts([...products, {}]); // add empty product object
+  };
 
   return (
     <View style={styles.container}>
@@ -28,17 +37,18 @@ export default function App() {
         onChange={item => setSelectedBuyer(item.value)}
         style={{ width: 200, borderWidth: 1, borderColor: 'gray', borderRadius: 8, padding: 8, marginTop: 10 }}
       />
-
-      {selectedBuyer && (
-        <Text style={{ marginTop: 20 }}>Selected Buyer ID: {selectedBuyer}</Text>
-      )}
+      <View style={styles.container}>
+      {products.map((_, index) => (
+              <BillCreate key={index}/>))}
+      <Button title="Add Product" onPress={handleAddProduct} />
+      </View>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
