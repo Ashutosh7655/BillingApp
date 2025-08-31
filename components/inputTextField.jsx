@@ -5,7 +5,7 @@ import { useState } from "react";
 export function InputTextField() {
   const [id, setId] = useState('');
   const [price, setPrice] = useState('');
-
+  console.log(id,price);
   return (
     <View>
       <TextInput
