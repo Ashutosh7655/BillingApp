@@ -27,8 +27,6 @@ export default function AddBuyer() {
         onChangeText={setName}
         style={styles.textInputStyles}
       />
-
-      {/* Render all product inputs */}
       {products.map((_, index) => (
         <InputTextField key={index} />
       ))}
