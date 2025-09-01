@@ -1,24 +1,42 @@
 import { View, Text, TextInput, Button, StyleSheet } from "react-native";
 import { useRouter } from "expo-router";
-import { useState } from "react";
+import { useState,useEffect } from "react";
 import { InputTextField } from "../../components/inputTextField";
-export const db = [];
+import { appKey } from "../../utils/key";
+import { getStorageValues, setStorageData } from "../../utils/storage";
+//export const db = [];
 export default function AddBuyer() {
   const router = useRouter();
   const [buyerName, setBuyerName] = useState("");//BuyerHook
   const [products, setProducts] = useState([]); // store product fields
+  const [buyer,setBuyer]=useState([]);
+
+  useEffect(() => {
+  const loadBuyers = async () => {
+    const data = await getStorageValues(appKey);
+    if (data) {
+      setBuyer(data);   // already saved buyers
+    } else {
+      setBuyer([]);     // nothing saved yet → empty list
+    }
+  };
+  loadBuyers();
+}, []);
 
   const handleAddProduct = () => {
     setProducts([...products, { id: '', price: '' }]); // add empty product object
   };
 
-  const handleSave = () => {
+  const handleSave = async() => {
     console.log("New Buyer:", buyerName);
     console.log("Products:", products);
-    const dbObject = { name: buyerName, products ,id:Date.now()};
-    db.push(dbObject);
-    // here you’d map product input values
+    
+    const newBuyer = { name: buyerName, products, id: Date.now() };
+    const updated = [...buyer, newBuyer];      // merge with current state
+    await setStorageData(appKey, updated);   // save to AsyncStorage
+    setBuyer(updated);                         // update local state
     router.back();
+    
   };
   const updateProduct = (index, newData) => {
     const updated = [...products];
