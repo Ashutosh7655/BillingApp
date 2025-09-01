@@ -9,7 +9,9 @@ import AntDesign from '@expo/vector-icons/AntDesign';
 import { useRouter } from "expo-router";
 import { BuyerListItem } from "../../components/BuyersList";
 import { theme } from "../../theme";
-import { db } from "./add";
+import { useEffect, useState } from "react";
+import { getStorageValues } from "../../utils/storage";
+import { appKey } from "../../utils/key";
 // const db = [
 //   {
 //     id: 1,
@@ -28,17 +30,27 @@ import { db } from "./add";
 //   },
 // ];
 export default function Buyers() {
+  const [buyers,setBuyers]=useState([]);
+  useEffect(()=>{
+    const loadData=async()=>{
+      const b= await getStorageValues(appKey);
+      setBuyers(b||[]);
+      //console.log("Loaded buyers:", b);
+    }
+    //console.log("Loaded buyers:", b);
+    loadData();
+  },
+    [buyers])
   const router = useRouter();
-  console.log(db);
   return (
     <View style={styles.container}>
       <ScrollView contentContainerStyle={styles.scrollContent}>
-        {db.length === 0 ? (
+        { buyers.length=== 0 ? (
           <View style={styles.emptyContainer}>
             <Text style={styles.emptyText}>The List is empty.</Text>
           </View>
         ) : (
-          db.map((item) => (
+          buyers.map((item) => (
             <BuyerListItem
               name={item.name}
               id={item.id}
@@ -90,10 +102,21 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
     //justifyContent: 'center',
     padding: 12,
+  },emptyContainer:{
+    flex: 1,
+    flexDirection:'row',
+    backgroundColor: "#fff",
+    justifyContent: 'center',
+    alignItems:"center",
   },
+  emptyText:{
+    fontSize: 18,
+    fontWeight: "400",
+  },
+
   itemText: {
     fontSize: 18,
-    fontWeight: "200",
+    fontWeight: "400",
   },
   itemContainer: {
     borderBottomWidth: 1,

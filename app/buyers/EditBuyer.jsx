@@ -1,13 +1,13 @@
 import { View, Text, TextInput, Button, StyleSheet } from "react-native";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import { useEffect, useState } from "react";
-import { db } from "./add"; // shared db array
+//import { db } from "./add"; // shared db array
 import { InputTextField } from "../../components/inputTextField";
 
 export default function EditBuyer() {
   const { id } = useLocalSearchParams(); // read buyer id from route
   const router = useRouter();
-
+  
   const [buyerName, setBuyerName] = useState("");
   const [products, setProducts] = useState([]);
 

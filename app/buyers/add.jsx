@@ -28,8 +28,8 @@ export default function AddBuyer() {
   };
 
   const handleSave = async() => {
-    console.log("New Buyer:", buyerName);
-    console.log("Products:", products);
+    //console.log("New Buyer:", buyerName);
+    //console.log("Products:", products);
     
     const newBuyer = { name: buyerName, products, id: Date.now() };
     const updated = [...buyer, newBuyer];      // merge with current state

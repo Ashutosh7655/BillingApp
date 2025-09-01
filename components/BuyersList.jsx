@@ -3,7 +3,10 @@ import { StyleSheet, Text, View, TouchableOpacity, Alert, Pressable } from 'reac
 import { theme } from '../theme.js';
 import AntDesign from "@expo/vector-icons/AntDesign";
 import { useRouter } from 'expo-router';
+import { useEffect, useState } from "react";
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
+import { setStorageData,getStorageValues } from '../utils/storage.js';
+import { appKey } from '../utils/key.js';
 export function BuyerListItem({ name, id }) {
   const parseId = id;
   const router = useRouter();
@@ -12,7 +15,7 @@ export function BuyerListItem({ name, id }) {
       [
         {
           text: "Yes",
-          onPress: () => console.log("deleted"),
+          onPress: () => onDelete(id),
           style: "destructive",
         },
         {
@@ -28,6 +31,21 @@ export function BuyerListItem({ name, id }) {
   const handleEdit=()=>{
     router.push({ pathname: "/buyers/EditBuyer", params: { id } });
   }
+  const onDelete=async(id)=>{
+    const updatedBuyers =buyers.filter((item)=>item.id!=id);
+    console.log("deleted");
+    setBuyers(updatedBuyers);
+    await setStorageData(appKey,updatedBuyers);
+  }
+  const [buyers,setBuyers]=useState([]);
+    useEffect(()=>{
+      const loadData=async()=>{
+        const b= await getStorageValues(appKey);
+        setBuyers(b||[]);
+      }
+      //console.log("Loaded buyers:", b);
+      loadData();
+    },[buyers]);
   return (
     <View >
       <View style={styles.itemContainer}>
