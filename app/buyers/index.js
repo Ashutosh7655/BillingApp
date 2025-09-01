@@ -9,26 +9,27 @@ import AntDesign from '@expo/vector-icons/AntDesign';
 import { useRouter } from "expo-router";
 import { BuyerListItem } from "../../components/BuyersList";
 import { theme } from "../../theme";
-const db = [
-  {
-    id: 1,
-    name: "John",
-    contact: "55555555",
-  },
-  {
-    id: 2,
-    name: "Jane",
-    contact: "666666",
-  },
-  {
-    id: 3,
-    name: "Josh",
-    contact: "777777",
-  },
-];
+import { db } from "./add";
+// const db = [
+//   {
+//     id: 1,
+//     name: "John",
+//     contact: "55555555",
+//   },
+//   {
+//     id: 2,
+//     name: "Jane",
+//     contact: "666666",
+//   },
+//   {
+//     id: 3,
+//     name: "Josh",
+//     contact: "777777",
+//   },
+// ];
 export default function Buyers() {
   const router = useRouter();
-
+  console.log(db);
   return (
     <View style={styles.container}>
       <ScrollView contentContainerStyle={styles.scrollContent}>

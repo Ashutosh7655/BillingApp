@@ -1,24 +1,34 @@
-import { StyleSheet, TextInput, View } from "react-native";
+import { StyleSheet, TextInput, View,Text } from "react-native";
 import { theme } from "../theme.js";
 import { useState } from "react";
 
-export function InputTextField() {
-  const [id, setId] = useState('');
+export function InputTextField(props) {
+  const [id, setId] = useState(''||props.product.id);
   const [price, setPrice] = useState('');
-  console.log(id,price);
+  const sendData=(addId,addPrice)=>{
+    if(props.onChangeData){
+      props.onChangeData({id:addId,price:addPrice},props.index); 
+      
+    }
+    
+  }
   return (
     <View>
       <TextInput
         placeholder="Product Id"
         value={id}
-        onChangeText={setId}
+        onChangeText={(text)=>{
+          setId(text);
+          sendData(text,price);}}
         style={styles.textInput}
       />
       <TextInput
         placeholder="Product Price"
         value={price}
-        onChangeText={setPrice}
-        keyboardType="numeric"  // 👈 ensures number pad for price
+        onChangeText={(text)=>{
+          setPrice(text);
+          sendData(id,text);}}
+        keyboardType="numeric" 
         style={styles.textInput}
       />
     </View>

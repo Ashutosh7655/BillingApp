@@ -2,33 +2,47 @@ import { View, Text, TextInput, Button, StyleSheet } from "react-native";
 import { useRouter } from "expo-router";
 import { useState } from "react";
 import { InputTextField } from "../../components/inputTextField";
-
+export const db = [];
 export default function AddBuyer() {
   const router = useRouter();
-  const [name, setName] = useState("");
+  const [buyerName, setBuyerName] = useState("");//BuyerHook
   const [products, setProducts] = useState([]); // store product fields
 
   const handleAddProduct = () => {
-    setProducts([...products, {}]); // add empty product object
+    setProducts([...products, { id: '', price: '' }]); // add empty product object
   };
 
   const handleSave = () => {
-    console.log("New Buyer:", name);
-    console.log("Products:", products); // here you’d map product input values
+    console.log("New Buyer:", buyerName);
+    console.log("Products:", products);
+    const dbObject = { name: buyerName, products ,id:Date.now()};
+    db.push(dbObject);
+    // here you’d map product input values
     router.back();
   };
+  const updateProduct = (index, newData) => {
+    const updated = [...products];
+    updated[index] = newData;
+    setProducts(updated);
+  };
+
 
   return (
     <View style={{ flex: 1, padding: 20 }}>
       <Text>Add Buyer Name</Text>
       <TextInput
         placeholder="Enter buyer name"
-        value={name}
-        onChangeText={setName}
+        value={buyerName}
+        onChangeText={setBuyerName}
         style={styles.textInputStyles}
       />
       {products.map((_, index) => (
-        <InputTextField key={index} />
+        <InputTextField
+          product={products[index]}
+          index={index}
+          onChangeData={(data, i) => updateProduct(i, data)}
+          key={index}
+        />
       ))}
 
       <Button title="Add New Product" onPress={handleAddProduct} />
