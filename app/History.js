@@ -4,7 +4,9 @@ export default function History() {
   return (
     <View style={styles.container}>
      <Text>History hello
-      
+      {
+        //we need to create new db for strong bills by user name 
+      }
      </Text>
     </View>
   );
