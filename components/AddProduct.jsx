@@ -4,7 +4,7 @@ import AntDesign from "@expo/vector-icons/AntDesign";
 import { useState } from "react";
 import { theme } from "../theme";
 
-export function BillCreate() {
+export function AddProduct() {
   const [id, setId] = useState("");
   const [quantity, setQuantity] = useState("");
 const handleDelete=()=>{

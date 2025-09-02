@@ -3,40 +3,53 @@ import AntDesign from "@expo/vector-icons/AntDesign";
 import { theme } from "../../theme";
 import { useLocalSearchParams } from "expo-router";
 import { useEffect, useState } from "react";
-import { getStorageValues } from "../../utils/storage";
+import { getStorageValues, setStorageData } from "../../utils/storage";
 import { appKey } from "../../utils/key";
 
 export default function BuyerInfo() {
-  const [db,setDb]=useState([]);
-  useEffect(()=>{
-    const load=async()=>{
-      updateDb=await getStorageValues(appKey);
-      setDb(updateDb);
-    }
-    load();
-  },[]);
+  const { id } = useLocalSearchParams();
+  const [db, setDb] = useState([]);
+  const [buyer, setBuyer] = useState(null);
+  const [products, setProducts] = useState([]);
 
-  const {id}=useLocalSearchParams();
-  const buyer = db.find((item) => item.id == id);
-  const products = buyer ? buyer.products : [];
-  const onDelete=(pid)=>{
-    const uDb=products.filter((item)=>item.id!=pid);
-    setDb(uDb);
-  }
-  const handleDelete = (pid) => {
-    Alert.alert(`This will delete the ${pid}?`, "", [
+  // Load buyers from AsyncStorage
+  useEffect(() => {
+    const loadDb = async () => {
+      const storedDb = (await getStorageValues(appKey)) || [];
+      setDb(storedDb);
+    };
+    loadDb();
+  }, []);
+
+  // Set the current buyer and products once db is loaded
+  useEffect(() => {
+    if (!db.length) return;
+    const currentBuyer = db.find((item) => item.id == id);
+    setBuyer(currentBuyer);
+    setProducts(currentBuyer ? currentBuyer.products : []);
+  }, [db, id]);
+
+  // Handle deletion of a product
+  const handleDelete = (productId) => {
+    Alert.alert(`This will delete the product ${productId}?`, "", [
       {
         text: "Yes",
-        onPress: () => onDelete(pid),
         style: "destructive",
+        onPress: async () => {
+          const updatedProducts = products.filter((p) => p.id != productId);
+          setProducts(updatedProducts);
+
+          // Update buyer in db and save to AsyncStorage
+          const updatedDb = db.map((b) =>
+            b.id == id ? { ...b, products: updatedProducts } : b
+          );
+          setDb(updatedDb);
+          await setStorageData(appKey, updatedDb);
+        },
       },
-      {
-        text: "No",
-        style: "cancel",
-      },
+      { text: "No", style: "cancel" },
     ]);
   };
- console.log(id);
 
   return (
     <View style={{ flex: 1, padding: 20, backgroundColor: theme.colorWhite }}>
@@ -65,6 +78,7 @@ export default function BuyerInfo() {
     </View>
   );
 }
+
 const styles = StyleSheet.create({
   itemText: {
     fontSize: 18,
