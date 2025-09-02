@@ -1,8 +1,10 @@
 import { View, Text, TextInput, Button, StyleSheet } from "react-native";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import { useEffect, useState } from "react";
+import { appKey } from "../../utils/key";
 //import { db } from "./add"; // shared db array
 import { InputTextField } from "../../components/inputTextField";
+import { getStorageValues,setStorageData } from "../../utils/storage";
 
 export default function EditBuyer() {
   const { id } = useLocalSearchParams(); // read buyer id from route
@@ -10,30 +12,41 @@ export default function EditBuyer() {
   
   const [buyerName, setBuyerName] = useState("");
   const [products, setProducts] = useState([]);
-
+  const [db,setDb]=useState([]);
   // Load existing buyer data
-  useEffect(() => {
-    const existing = db.find(b => b.id == id);
-    if (existing) {
-      setBuyerName(existing.name);
-      setProducts(existing.products);
-    }
-  }, [id]);
+useEffect(() => {
+  const fetchDb = async () => {
+    const udb = await getStorageValues(appKey) || [];
+    setDb(udb);
+  };
+  fetchDb();
+}, []);
+
+useEffect(() => {
+  if (db.length === 0) return;
+  const existing = db.find(b => b.id == id);
+  if (existing) {
+    setBuyerName(existing.name);
+    setProducts(existing.products);
+  }
+}, [db, id]);
 
   const updateProduct = (index, newData) => {
     const updated = [...products];
     updated[index] = newData;
     setProducts(updated);
+
   };
 
-  const handleSave = () => {
-    const updatedBuyer = { id: Number(id), name: buyerName, products };
-    const index = db.findIndex(b => b.id == id);
-    if (index >= 0) {
-      db[index] = updatedBuyer;
-    }
-    router.back(); // go back to list
-  };
+  const handleSave = async () => {
+  const updatedBuyer = { id: Number(id), name: buyerName, products };
+  const updatedDb = db.map(b => b.id === Number(id) ? updatedBuyer : b);
+  setDb(updatedDb); // update local state
+  console.log('added 1')
+  await setStorageData(appKey, updatedDb); 
+  console.log('added 2')// save to AsyncStorage
+  router.push('/buyers'); // navigate back
+};
 
   return (
     <View style={{ flex: 1, padding: 20 }}>
@@ -44,7 +57,7 @@ export default function EditBuyer() {
         onChangeText={setBuyerName}
         style={styles.textInputStyles}
       />
-      {products.map((product, index) => (
+      {products.map((_, index) => (
         
         <InputTextField
           key={index}
