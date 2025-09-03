@@ -1,7 +1,7 @@
-import { View, Text, Alert, StyleSheet, TouchableOpacity } from "react-native";
+import { View, Text, Alert, StyleSheet, TouchableOpacity, Button } from "react-native";
 import AntDesign from "@expo/vector-icons/AntDesign";
 import { theme } from "../../theme";
-import { useLocalSearchParams } from "expo-router";
+import { router, useLocalSearchParams } from "expo-router";
 import { useEffect, useState } from "react";
 import { getStorageValues, setStorageData } from "../../utils/storage";
 import { appKey } from "../../utils/key";
@@ -74,7 +74,16 @@ export default function BuyerInfo() {
             </TouchableOpacity>
           </View>
         ))
-      )}
+      )}<TouchableOpacity
+          style={styles.button}
+          onPress={() =>router.push({ pathname: "/buyers/EditBuyer", params: { id } })} // Navigate to Add Buyer screen
+        >
+          {/* Icon + text inside button */}<AntDesign
+            name="edit"
+            size={24}
+            color="Blue"/>
+          <Text style={styles.buttonText}>Add Buyer</Text>
+        </TouchableOpacity>
     </View>
   );
 }
@@ -95,5 +104,18 @@ const styles = StyleSheet.create({
     backgroundColor: theme.colorLightGrey,
     borderRadius: 8,
     marginBottom: 8,
+  },
+  button: {
+    flexDirection: 'row', // icon + text side by side
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: '#007bff',
+    padding: 12,
+    borderRadius: 8,
+  },
+  buttonText: {
+    color: 'white',
+    marginLeft: 8, // spacing between icon and text
+    fontSize: 16,
   },
 });
