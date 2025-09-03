@@ -81,8 +81,8 @@ export default function BuyerInfo() {
           {/* Icon + text inside button */}<AntDesign
             name="edit"
             size={24}
-            color="Blue"/>
-          <Text style={styles.buttonText}>Add Buyer</Text>
+            color="white"/>
+          <Text style={styles.buttonText}>Edit Info</Text>
         </TouchableOpacity>
     </View>
   );

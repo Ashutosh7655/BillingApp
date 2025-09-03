@@ -1,10 +1,10 @@
-import { View, Text, TextInput, Button, StyleSheet, Alert } from "react-native";
+import { View, Text, TextInput, Button, StyleSheet, Alert,TouchableOpacity } from "react-native";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import { useEffect, useState } from "react";
 import { appKey } from "../../utils/key";
 import { InputTextField } from "../../components/inputTextField";
 import { getStorageValues, setStorageData } from "../../utils/storage";
-
+import AntDesign from "@expo/vector-icons/AntDesign";
 export default function EditBuyer() {
   const { id } = useLocalSearchParams();
   const router = useRouter();
@@ -95,12 +95,24 @@ export default function EditBuyer() {
 
       {/* Add Product */}
       <View style={{ marginTop: 20 }}>
-        <Button title="Add Product" onPress={handleAddProduct} />
+      <TouchableOpacity
+          style={styles.button}
+          onPress={handleAddProduct} // Navigate to Add Buyer screen
+        >
+          {/* Icon + text inside button */}<AntDesign name="pluscircleo" size={24} color="white" />
+          <Text style={styles.buttonText}>Add Product</Text>
+        </TouchableOpacity>
       </View>
 
       {/* Save */}
       <View style={{ marginTop: 20 }}>
-        <Button title="Save Changes" onPress={handleSave} />
+        <TouchableOpacity
+          style={styles.button}
+          onPress={handleSave} // Navigate to Add Buyer screen
+        >
+          {/* Icon + text inside button */}<AntDesign name="save" size={24} color="white" />
+          <Text style={styles.buttonText}>Save Changes</Text>
+        </TouchableOpacity>
       </View>
     </View>
   );
@@ -112,5 +124,19 @@ const styles = StyleSheet.create({
     borderColor: "#ccc",
     padding: 10,
     marginVertical: 10,
+  },
+  
+  button: {
+    flexDirection: 'row', // icon + text side by side
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: '#007bff',
+    padding: 12,
+    borderRadius: 8,
+  },
+  buttonText: {
+    color: 'white',
+    marginLeft: 8, // spacing between icon and text
+    fontSize: 16,
   },
 });

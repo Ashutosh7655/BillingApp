@@ -1,4 +1,5 @@
-import { View, Text, TextInput, Button, StyleSheet } from "react-native";
+import { View, Text, TextInput, Button, StyleSheet,TouchableOpacity } from "react-native";
+import { AntDesign } from "@expo/vector-icons";
 import { useRouter } from "expo-router";
 import { useState,useEffect } from "react";
 import { InputTextField } from "../../components/inputTextField";
@@ -47,13 +48,18 @@ export default function AddBuyer() {
 
   return (
     <View style={{ flex: 1, padding: 20 }}>
-      <Text>Add Buyer Name</Text>
+      <Text>Buyer Name:</Text>
       <TextInput
         placeholder="Enter buyer name"
         value={buyerName}
         onChangeText={setBuyerName}
         style={styles.textInputStyles}
       />
+      <View style={{flexDirection:'row'}}>
+
+      <Text style={{paddingLeft:8}}>Product Name</Text>
+      <Text style={{paddingLeft:82}}>Price</Text>
+      </View>
       {products.map((_, index) => (
         <InputTextField
           product={products[index]}
@@ -62,11 +68,26 @@ export default function AddBuyer() {
           key={index}
         />
       ))}
+      <View style={{ marginTop: 20 }}>
 
-      <Button title="Add New Product" onPress={handleAddProduct} />
+      <TouchableOpacity
+                style={styles.button}
+                onPress={handleAddProduct} // Navigate to Add Buyer screen
+                >
+                {/* Icon + text inside button */}<AntDesign name="pluscircleo" size={24} color="white" />
+                <Text style={styles.buttonText}>Add Product</Text>
+              </TouchableOpacity>
+                </View>
 
       <View style={{ marginTop: 20 }}>
-        <Button title="Save" onPress={handleSave} />
+        
+        <TouchableOpacity
+          style={styles.button}
+          onPress={handleSave} // Navigate to Add Buyer screen
+        >
+          {/* Icon + text inside button */}<AntDesign name="save" size={24} color="white" />
+          <Text style={styles.buttonText}>Save</Text>
+        </TouchableOpacity>
       </View>
     </View>
   );
@@ -78,5 +99,18 @@ const styles = StyleSheet.create({
     borderColor: "#ccc",
     padding: 10,
     marginVertical: 10,
+  },
+   button: {
+    flexDirection: 'row', // icon + text side by side
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: '#007bff',
+    padding: 12,
+    borderRadius: 8,
+  },
+  buttonText: {
+    color: 'white',
+    marginLeft: 8, // spacing between icon and text
+    fontSize: 16,
   },
 });

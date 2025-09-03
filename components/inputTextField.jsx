@@ -15,7 +15,7 @@ export function InputTextField({ product, index, onChangeData, onDelete }) {
   return (
     <View style={styles.row}>
       <TextInput
-        placeholder="Product Id"
+        placeholder="Product Name"
         value={id}
         onChangeText={setId}
         style={styles.textInput}

@@ -80,7 +80,7 @@ export default function Buyers() {
           onPress={() => router.push("/buyers/add")} // Navigate to Add Buyer screen
         >
           {/* Icon + text inside button */}
-          <AntDesign name="adduser" size={24} color="black" />
+          <AntDesign name="adduser" size={24} color="white" />
           <Text style={styles.buttonText}>Add Buyer</Text>
         </TouchableOpacity>
       </View>
