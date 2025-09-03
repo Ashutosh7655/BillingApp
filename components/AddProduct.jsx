@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { theme } from "../theme";
 
 export function AddProduct({ buyerDetails,onDelete }) {
-  console.log(buyerDetails);
+  // console.log(buyerDetails);
   const [id, setId] = useState("");
   const [quantity, setQuantity] = useState("");
   const [pricePerUnit, setPricePerUnit] = useState(0);
