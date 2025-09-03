@@ -3,7 +3,7 @@ import AntDesign from "@expo/vector-icons/AntDesign";
 import { useEffect, useState } from "react";
 import { theme } from "../theme";
 
-export function AddProduct({ buyerDetails }) {
+export function AddProduct({ buyerDetails,onDelete }) {
   console.log(buyerDetails);
   const [id, setId] = useState("");
   const [quantity, setQuantity] = useState("");
@@ -20,7 +20,7 @@ export function AddProduct({ buyerDetails }) {
 
   const handleDelete = () => {
     Alert.alert("This will delete the product?", "", [
-      { text: "Yes", onPress: () => console.log("deleted"), style: "destructive" },
+      { text: "Yes", onPress: onDelete, style: "destructive" },
       { text: "No", style: "cancel" }
     ]);
   };

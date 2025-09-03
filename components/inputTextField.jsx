@@ -1,58 +1,56 @@
-import { StyleSheet, TextInput, View,Text } from "react-native";
-import { theme } from "../theme.js";
-import { useState } from "react";
+import { StyleSheet, TextInput, View, TouchableOpacity } from "react-native";
+import { theme } from "../theme";
+import { useState, useEffect } from "react";
+import AntDesign from "@expo/vector-icons/AntDesign";
 
-export function InputTextField(props) {
-  const [id, setId] = useState(''||props.product.id);
-  const [price, setPrice] = useState('');
-  const sendData=(addId,addPrice)=>{
-    if(props.onChangeData){
-      props.onChangeData({id:addId,price:addPrice},props.index); 
-      
-    }
-    
-  }
+export function InputTextField({ product, index, onChangeData, onDelete }) {
+  const [id, setId] = useState(product?.id || '');
+  const [price, setPrice] = useState(product?.price || '');
+
+  // Send updated data to parent whenever id or price changes
+  useEffect(() => {
+    onChangeData({ id, price }, index);
+  }, [id, price]);
+
   return (
-    <View>
+    <View style={styles.row}>
       <TextInput
         placeholder="Product Id"
         value={id}
-        onChangeText={(text)=>{
-          setId(text);
-          sendData(text,price);}}
+        onChangeText={setId}
         style={styles.textInput}
       />
       <TextInput
         placeholder="Product Price"
         value={price}
-        onChangeText={(text)=>{
-          setPrice(text);
-          sendData(id,text);}}
-        keyboardType="numeric" 
+        onChangeText={setPrice}
+        keyboardType="numeric"
         style={styles.textInput}
       />
+      {onDelete && (
+        <TouchableOpacity onPress={onDelete} style={styles.deleteBtn}>
+          <AntDesign name="closecircle" size={24} color={theme.colorRed} />
+        </TouchableOpacity>
+      )}
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  textInput: {
-    borderWidth: 1,
-    borderColor: theme.colorCelurian || "#ccc",
-    padding: 12,
-    marginVertical: 8,
-    borderRadius: 8,
-    fontSize: 16,
-    backgroundColor: "#fff",
-    borderWidth: 1,
-    borderColor: "#ccc",
-    padding: 10,
-    marginVertical: 10,
+  row: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginVertical: 6,
   },
-  textInputStyles: {
+  textInput: {
+    flex: 1,
     borderWidth: 1,
     borderColor: "#ccc",
     padding: 10,
-    marginVertical: 10,
-  }
+    borderRadius: 8,
+    marginHorizontal: 4,
+  },
+  deleteBtn: {
+    marginLeft: 8,
+  },
 });

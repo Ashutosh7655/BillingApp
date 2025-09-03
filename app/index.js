@@ -32,7 +32,12 @@ export default function App() {
     };
     loadDb();
   }, []);
-
+  const onDelete=(index)=>
+  {
+    const newProducts=[...products];
+    newProducts.splice(index,1);
+    setProducts(newProducts);
+  }
   // Map buyers to the format needed by Dropdown component
   const dropdowndb = db.map((item) => ({
     label: item.name, // Displayed in the dropdown
@@ -65,7 +70,8 @@ export default function App() {
       {/* Dynamic product fields */}
       {products.map((_, index) => (
         <AddProduct key={index}
-        buyerDetails={buyerDetails} />
+        buyerDetails={buyerDetails}
+        onDelete={()=>onDelete(index)} />
       ))}
 
       {/* Button to add more product input fields */}
