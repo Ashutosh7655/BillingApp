@@ -46,7 +46,7 @@ export default function App() {
   const handleAddProduct = () => {
     setProducts([...products, {}]);
   };
-
+  const buyerDetails = db.find((item) => item.id == selectedBuyer);
   return (
     <View style={styles.container}>
       <Text>Select Buyer:</Text>
@@ -64,7 +64,8 @@ export default function App() {
 
       {/* Dynamic product fields */}
       {products.map((_, index) => (
-        <AddProduct key={index} />
+        <AddProduct key={index}
+        buyerDetails={buyerDetails} />
       ))}
 
       {/* Button to add more product input fields */}
