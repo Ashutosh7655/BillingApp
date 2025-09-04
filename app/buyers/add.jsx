@@ -55,11 +55,7 @@ export default function AddBuyer() {
         onChangeText={setBuyerName}
         style={styles.textInputStyles}
       />
-      <View style={{flexDirection:'row'}}>
-
-      <Text style={{paddingLeft:8}}>Product Name</Text>
-      <Text style={{paddingLeft:82}}>Price</Text>
-      </View>
+      
       {products.map((_, index) => (
         <InputTextField
           product={products[index]}

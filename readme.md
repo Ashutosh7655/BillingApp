@@ -33,9 +33,3 @@ A simple billing management app with three main screens for handling buyers and 
 3. Run the app:
     ```bash
     npm start
-### todo
-edit buyer screen
--add icons in addproduct,savechanges
-and product name and product price above the input fields
--generate bill button working with lookalike of a bill page
--and history page working remember histoy has a different db with same name and id [{id,name,bill no,total}]

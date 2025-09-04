@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from "react";
-import { View, Text, StyleSheet, FlatList, TouchableOpacity, Alert } from "react-native";
+import React, { useState, useCallback } from "react";
+import { View, Text, StyleSheet, FlatList, TouchableOpacity } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { AntDesign } from "@expo/vector-icons";
+import { useFocusEffect } from "@react-navigation/native"; // ✅ important
 import { theme } from "../theme";
 
 export default function HistoryScreen() {
@@ -18,9 +19,12 @@ export default function HistoryScreen() {
     setHistory(updated);
   };
 
-  useEffect(() => {
-    loadHistory();
-  }, []);
+  // ✅ Reload when screen comes into focus
+  useFocusEffect(
+    useCallback(() => {
+      loadHistory();
+    }, [])
+  );
 
   return (
     <View style={styles.container}>
@@ -49,6 +53,14 @@ export default function HistoryScreen() {
 const styles = StyleSheet.create({
   container: { flex: 1, padding: 20, backgroundColor: "#fff" },
   title: { fontSize: 20, fontWeight: "bold", marginBottom: 10 },
-  row: { flexDirection: "row", justifyContent: "space-between", alignItems: "center", backgroundColor: "#f2f2f2", padding: 10, marginBottom: 8, borderRadius: 8 },
+  row: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    backgroundColor: "#f2f2f2",
+    padding: 10,
+    marginBottom: 8,
+    borderRadius: 8,
+  },
   text: { fontSize: 14 },
 });

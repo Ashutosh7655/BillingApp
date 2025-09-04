@@ -18,7 +18,7 @@ export default function App() {
       setDb(udb || []);
     };
     loadDb();
-  }, []);
+  }, [db]);
 
   const buyerDetails = db.find((b) => b.id == selectedBuyer);
   const products = buyerDetails?.products || [];
