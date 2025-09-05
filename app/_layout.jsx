@@ -19,7 +19,7 @@ export default function Layout(){
     return(
         <Tabs>
             <Tabs.Screen name="buyers" options={{title:"Buyers",headerShown:false,
-                tabBarIcon:(color,size)=>{
+                tabBarIcon:()=>{
                     return (<AntDesign name="user" size={24} color="#1a759f" />);
                 }
             }}/>

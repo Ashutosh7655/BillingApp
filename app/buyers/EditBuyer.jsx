@@ -67,7 +67,8 @@ export default function EditBuyer() {
     );
     setDb(updatedDb);
     await setStorageData(appKey, updatedDb);
-    router.push("/buyers");
+    router.dismissAll(); 
+    router.replace("/buyers");
   };
 
   return (
