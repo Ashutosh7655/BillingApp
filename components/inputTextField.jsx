@@ -18,6 +18,8 @@ export function InputTextField({ product, index, onChangeData, onDelete }) {
         placeholder="Product Name"
         value={id}
         onChangeText={setId}
+        
+        placeholderTextColor="#000"
         style={styles.textInput}
       />
       <TextInput
@@ -26,6 +28,8 @@ export function InputTextField({ product, index, onChangeData, onDelete }) {
         onChangeText={setPrice}
         keyboardType="numeric"
         style={styles.textInput}
+        
+        placeholderTextColor="#000"
       />
       {onDelete && (
         <TouchableOpacity onPress={onDelete} style={styles.deleteBtn}>

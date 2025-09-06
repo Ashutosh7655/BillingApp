@@ -2,7 +2,7 @@
   "expo": {
     "name": "BillingApp",
     "slug": "BillingApp",
-    "scheme": "BillingApp",
+    "scheme": ["billingapp"],
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -36,6 +36,12 @@
         "projectId": "30bc514d-ff26-4bb2-9b0f-b39695d3e507"
       }
     },
-    "owner": "ashmahen"
+    "owner": "ashmahen",
+    "runtimeVersion": {
+      "policy": "appVersion"
+    },
+    "updates": {
+      "url": "https://u.expo.dev/30bc514d-ff26-4bb2-9b0f-b39695d3e507"
+    }
   }
 }

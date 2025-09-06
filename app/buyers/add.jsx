@@ -47,13 +47,14 @@ export default function AddBuyer() {
 
 
   return (
-    <View style={{ flex: 1, padding: 20 }}>
+    <View style={{ flex: 1, padding: 20,backgroundColor:"white" }}>
       <Text>Buyer Name:</Text>
       <TextInput
         placeholder="Enter buyer name"
         value={buyerName}
         onChangeText={setBuyerName}
         style={styles.textInputStyles}
+        placeholderTextColor="#000"
       />
       
       {products.map((_, index) => (
@@ -95,6 +96,7 @@ const styles = StyleSheet.create({
     borderColor: "#ccc",
     padding: 10,
     marginVertical: 10,
+    color:"black"
   },
    button: {
     flexDirection: 'row', // icon + text side by side
