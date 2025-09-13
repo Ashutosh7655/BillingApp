@@ -1,4 +1,3 @@
-
 # Billing App
 
 A simple billing application built with **React Native**, **Expo Router**, and **AsyncStorage**.  
