@@ -1,10 +1,11 @@
-import { View, Text, Alert, StyleSheet, TouchableOpacity, Button } from "react-native";
+import { View, Text, Alert, StyleSheet, TouchableOpacity, Button, ScrollView } from "react-native";
 import AntDesign from "@expo/vector-icons/AntDesign";
 import { theme } from "../../theme";
 import { router, useLocalSearchParams } from "expo-router";
 import { useEffect, useState } from "react";
 import { getStorageValues, setStorageData } from "../../utils/storage";
 import { appKey } from "../../utils/key";
+import { KeyboardAvoidingView } from "react-native";
 
 export default function BuyerInfo() {
   const { id } = useLocalSearchParams();
@@ -50,13 +51,15 @@ export default function BuyerInfo() {
       { text: "No", style: "cancel" },
     ]);
   };
+  
 
   return (
     <View style={{ flex: 1, padding: 20, backgroundColor: theme.colorWhite }}>
       <Text style={{ fontSize: 24, fontWeight: "600", marginBottom: 16 }}>
         Products of {buyer ? buyer.name : "Unknown Buyer"}
       </Text>
-
+    <KeyboardAvoidingView style={{ flex: 1, flexDirection: 'column',justifyContent: 'center',}} behavior="padding" enabled   keyboardVerticalOffset={100}>
+      <ScrollView>
       {products.length === 0 ? (
         <Text style={{ fontSize: 18, color: theme.colorGrey }}>
           No products found.
@@ -64,17 +67,21 @@ export default function BuyerInfo() {
       ) : (
         products.map((product) => (
           <View style={styles.itemContainer} key={product.id}>
-            <Text style={styles.itemText}>ID: {product.id}</Text>
+            <Text style={styles.itemText}>Product: {product.id}</Text>
             <Text style={styles.itemText}>Price: {product.price}</Text>
             <TouchableOpacity
               onPress={() => handleDelete(product.id)}
               activeOpacity={0.8}
-            >
+              >
               <AntDesign name="closecircle" size={24} color={theme.colorRed} />
             </TouchableOpacity>
           </View>
         ))
-      )}<TouchableOpacity
+      )}
+      
+    </ScrollView>
+  </KeyboardAvoidingView>
+      <TouchableOpacity
           style={styles.button}
           onPress={() =>router.push({ pathname: "/buyers/EditBuyer", params: { id } })} // Navigate to Add Buyer screen
         >

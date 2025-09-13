@@ -1,7 +1,7 @@
-import { View, Text, TextInput, Button, StyleSheet,TouchableOpacity } from "react-native";
+import { View, Text, TextInput, Button, StyleSheet, TouchableOpacity, ScrollView, KeyboardAvoidingView } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
 import { useRouter } from "expo-router";
-import { useState,useEffect } from "react";
+import { useState, useEffect } from "react";
 import { InputTextField } from "../../components/inputTextField";
 import { appKey } from "../../utils/key";
 import { getStorageValues, setStorageData } from "../../utils/storage";
@@ -10,34 +10,34 @@ export default function AddBuyer() {
   const router = useRouter();
   const [buyerName, setBuyerName] = useState("");//BuyerHook
   const [products, setProducts] = useState([]); // store product fields
-  const [buyer,setBuyer]=useState([]);
+  const [buyer, setBuyer] = useState([]);
 
   useEffect(() => {
-  const loadBuyers = async () => {
-    const data = await getStorageValues(appKey);
-    if (data) {
-      setBuyer(data);   // already saved buyers
-    } else {
-      setBuyer([]);     // nothing saved yet → empty list
-    }
-  };
-  loadBuyers();
-}, []);
+    const loadBuyers = async () => {
+      const data = await getStorageValues(appKey);
+      if (data) {
+        setBuyer(data);   // already saved buyers
+      } else {
+        setBuyer([]);     // nothing saved yet → empty list
+      }
+    };
+    loadBuyers();
+  }, []);
 
   const handleAddProduct = () => {
     setProducts([...products, { id: '', price: '' }]); // add empty product object
   };
 
-  const handleSave = async() => {
+  const handleSave = async () => {
     //console.log("New Buyer:", buyerName);
     //console.log("Products:", products);
-    
+
     const newBuyer = { name: buyerName, products, id: Date.now() };
     const updated = [...buyer, newBuyer];      // merge with current state
     await setStorageData(appKey, updated);   // save to AsyncStorage
     setBuyer(updated);                         // update local state
     router.back();
-    
+
   };
   const updateProduct = (index, newData) => {
     const updated = [...products];
@@ -47,7 +47,7 @@ export default function AddBuyer() {
 
 
   return (
-    <View style={{ flex: 1, padding: 20,backgroundColor:"white" }}>
+    <View style={{ flex: 1, padding: 20, backgroundColor: "white" }}>
       <Text>Buyer Name:</Text>
       <TextInput
         placeholder="Enter buyer name"
@@ -56,28 +56,32 @@ export default function AddBuyer() {
         style={styles.textInputStyles}
         placeholderTextColor="#000"
       />
-      
+      <KeyboardAvoidingView style={{ flex: 1, flexDirection: 'column',justifyContent: 'center',}} behavior="padding" enabled   keyboardVerticalOffset={100}>
+      <ScrollView>
       {products.map((_, index) => (
         <InputTextField
-          product={products[index]}
-          index={index}
-          onChangeData={(data, i) => updateProduct(i, data)}
-          key={index}
+        product={products[index]}
+        index={index}
+        onChangeData={(data, i) => updateProduct(i, data)}
+        key={index}
         />
       ))}
+      </ScrollView>
+      </KeyboardAvoidingView>
+      
       <View style={{ marginTop: 20 }}>
 
-      <TouchableOpacity
-                style={styles.button}
-                onPress={handleAddProduct} // Navigate to Add Buyer screen
-                >
-                {/* Icon + text inside button */}<AntDesign name="pluscircleo" size={24} color="white" />
-                <Text style={styles.buttonText}>Add Product</Text>
-              </TouchableOpacity>
-                </View>
+        <TouchableOpacity
+          style={styles.button}
+          onPress={handleAddProduct} // Navigate to Add Buyer screen
+        >
+          {/* Icon + text inside button */}<AntDesign name="pluscircleo" size={24} color="white" />
+          <Text style={styles.buttonText}>Add Product</Text>
+        </TouchableOpacity>
+      </View>
 
       <View style={{ marginTop: 20 }}>
-        
+
         <TouchableOpacity
           style={styles.button}
           onPress={handleSave} // Navigate to Add Buyer screen
@@ -96,9 +100,9 @@ const styles = StyleSheet.create({
     borderColor: "#ccc",
     padding: 10,
     marginVertical: 10,
-    color:"black"
+    color: "black"
   },
-   button: {
+  button: {
     flexDirection: 'row', // icon + text side by side
     alignItems: 'center',
     justifyContent: 'center',

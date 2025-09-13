@@ -1,4 +1,4 @@
-import { View, Text, TextInput, Button, StyleSheet, Alert,TouchableOpacity } from "react-native";
+import { View, Text, TextInput, Button, StyleSheet, Alert,TouchableOpacity, ScrollView, KeyboardAvoidingView } from "react-native";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import { useEffect, useState } from "react";
 import { appKey } from "../../utils/key";
@@ -82,17 +82,20 @@ export default function EditBuyer() {
         onChangeText={setBuyerName}
         style={styles.textInputStyles}
       />
-
+      <KeyboardAvoidingView style={{ flex: 1, flexDirection: 'column',justifyContent: 'center',}} behavior="padding" enabled   keyboardVerticalOffset={100}>
+        <ScrollView>
       {/* Product fields */}
       {products.map((product, index) => (
         <InputTextField
-          key={index}
-          product={product}
-          index={index}
-          onChangeData={(data, i) => updateProduct(i, data)}
-          onDelete={() => deleteProduct(index)}
+        key={index}
+        product={product}
+        index={index}
+        onChangeData={(data, i) => updateProduct(i, data)}
+        onDelete={() => deleteProduct(index)}
         />
       ))}
+      </ScrollView>
+    </KeyboardAvoidingView>
 
       {/* Add Product */}
       <View style={{ marginTop: 20 }}>

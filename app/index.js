@@ -84,7 +84,7 @@ export default function App() {
       {/* Table header */}
       <View style={styles.headerRow}>
         <Text style={[styles.headerCell, { flex: 0.5 }]}></Text>
-        <Text style={[styles.headerCell, { flex: 2 }]}>Product Name</Text>
+        <Text style={[styles.headerCell, { flex: 2 }]}>Product</Text>
         <Text style={[styles.headerCell, { flex: 1 }]}>Qty</Text>
         <Text style={[styles.headerCell, { flex: 1 }]}>Price</Text>
         <Text style={[styles.headerCell, { flex: 1 }]}>Total</Text>
